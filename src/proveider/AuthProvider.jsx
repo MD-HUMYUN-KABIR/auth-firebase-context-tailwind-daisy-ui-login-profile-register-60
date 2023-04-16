@@ -1,9 +1,10 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import app from '../../firebase.config';
 
 const auth = getAuth(app);
-
+const provider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 export const AuthContext = createContext(null) //have to export this value
 
 const AuthProvider = ({children}) => {
@@ -33,10 +34,21 @@ useEffect(()=> {
     }
 } , [])
 
-// 
+// ---------------------
+const sendPassword = (email) => {
+   return sendPasswordResetEmail(auth, email)
+}
 //-----------------------
+const google = () => {
+  return  signInWithPopup(auth, provider)
+}
+// -----------------------
+const gitHub = () => {
+    return  signInWithPopup(auth, githubProvider)
+}
+// -----------------------
 const authInfo = {
-    user, createUser, signIn, logOut, loading
+    user, createUser, signIn, logOut, loading , sendPassword , google ,gitHub
 }
 // 
     return (

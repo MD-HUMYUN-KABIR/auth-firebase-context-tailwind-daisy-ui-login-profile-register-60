@@ -1,3 +1,11 @@
+
+/* project processing 
+1. react route
+2. tailwind install
+3. daisy tailwind components install
+4. firebase install 
+5. react.dev useContext go https://react.dev/reference/react/useContext
+*/
 /* 
 context api
 1. create context (export)
@@ -14,4 +22,9 @@ context api
 /* 
 1. break down the create user function
 2. auth provider will have auth and pass email and password from register
+
+
+/* 
+useEffect to set user on authprovider and send it various componetns
+
 */ 

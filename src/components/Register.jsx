@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../proveider/AuthProvider';
+import { sendEmailVerification, updateProfile } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const {user, createUser} = useContext(AuthContext);
@@ -20,13 +22,36 @@ const Register = () => {
           const loggedUser = result.user;
           console.log(loggedUser)
           form.reset();
+
+          sendVerificationEmail(loggedUser);
+          updateUserData(loggedUser, name);
+        
         })
         .catch(error => {
           console.log(error)
         })
     }
     // -----------------------------
-   
+    const sendVerificationEmail = (user) =>{
+      sendEmailVerification(user)
+      .then(result => {
+          // console.log(result);
+          alert('verify your email')
+      })
+
+  }
+  // ----------------------------
+  const updateUserData = (user, name) => {
+    updateProfile(user , {
+        displayName:name
+    })
+    .then(()=>{
+        console.log('user name updated')
+    })
+    .catch(error => {
+        // console.log(error.message)
+    })
+}
     return (
         <div>
          <div  className="hero min-h-screen bg-base-200">
@@ -54,7 +79,7 @@ const Register = () => {
           </label>
           <input type="password" name='password' placeholder="password" className="input input-bordered" required />
           <label className="label">
-            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+            <span>Already Have you an account ?   <Link to='/login' className="label-text-alt link link-hover">Log In</Link> </span>
           </label>
         </div>
         <div className="form-control mt-6">
